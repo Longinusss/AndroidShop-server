@@ -7,6 +7,13 @@ public class User {
     private String icon;
     private int points;
 
+    public User(String id, String password, String nickname) {
+        this.id = id;
+        this.password = password;
+        this.nickname = nickname;
+
+    }
+
     public String getId() {
         return id;
     }

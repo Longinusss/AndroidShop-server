@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.Base64;
+import java.util.HashMap;
 
 //@RestController注解，所以springmvc会将返回的JsonR对象自动转json返回给前端（底层默认是使用
 // jsckson来实现数据格式转换的）
@@ -48,7 +49,43 @@ public class AccountController {
              return JsonR.createFail(e.getMessage());//返回JsonR类型
         }
     }
-
+    /**
+     * override 2020.02.23
+     * 由于@RestController自动转化json
+     * 直接返回HashMap格式即可，不用使用自定义的JsonR类！
+     */
+//    public HashMap login(String id, String password, HttpServletRequest httpServletRequest){
+//        String receipt;
+//        HashMap res=new HashMap();
+//        try{
+//            User user;
+//            if((user=userMapper.selectByID(id))==null)
+//                throw new Exception("账户不存在,请先注册");
+//            else{
+//                //判断密码
+//                if(user.getPassword().equals(password)){
+//                    //产生登陆凭证
+//                    Timestamp timestamp=new Timestamp(System.currentTimeMillis());
+//                    String hash= Functions.md5(id+"qingshe"+timestamp,"its unbroken");
+//                    receipt=id+"|"+timestamp+"|"+hash;
+//                    //Base64 编码（加密）
+//                    Base64.Encoder encoder=Base64.getEncoder();
+//                    receipt=encoder.encodeToString(receipt.getBytes(StandardCharsets.UTF_8));
+//                    res.put("errorCode",0);
+//                    res.put("errorMessage",null);
+//                    res.put("data",receipt);
+//                    return res;//返回登陆凭证
+//                }else
+//                    throw new Exception("密码错误");
+//            }
+//
+//        }catch (Exception e){
+//            res.put("errorCode",0);
+//            res.put("errorMessage",e.getMessage());
+//            res.put("data",null);
+//            return res;//返回JsonR类型
+//        }
+//    }
     @RequestMapping(value = "/regist",method =RequestMethod.POST)
     public JsonR regist(String id,String password,String nickname,String yzm){
         User user;
